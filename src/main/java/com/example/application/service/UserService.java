@@ -1,8 +1,8 @@
 package com.example.application.service;
 
 import com.example.application.entity.UserEntity;
-import com.example.application.exception.UserAlreadyExistException;
-import com.example.application.exception.UserNotFoundException;
+import com.example.application.exception.user.UserAlreadyExistException;
+import com.example.application.exception.user.UserNotFoundException;
 import com.example.application.model.User;
 import com.example.application.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
-    public UserEntity registration(UserEntity user) throws UserAlreadyExistException {
+    public UserEntity registerUser(UserEntity user) throws UserAlreadyExistException {
         if (userRepo.findByUsername(user.getUsername()) != null) {
             throw new UserAlreadyExistException("Пользователь с таким именем уже существует");
         }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tasks")
 public class TaskController {
 
+    public static final String ERROR = "Произошла ошибка";
+
     @Autowired
     private TaskService taskService;
 
@@ -19,7 +21,7 @@ public class TaskController {
         try {
             return ResponseEntity.ok(taskService.create(task, userId));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
+            return ResponseEntity.badRequest().body(ERROR);
         }
     }
 
@@ -28,7 +30,7 @@ public class TaskController {
         try {
             return ResponseEntity.ok(taskService.complete(id));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
+            return ResponseEntity.badRequest().body(ERROR);
         }
     }
 }

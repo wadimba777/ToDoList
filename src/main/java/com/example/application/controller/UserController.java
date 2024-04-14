@@ -1,8 +1,8 @@
 package com.example.application.controller;
 
 import com.example.application.entity.UserEntity;
-import com.example.application.exception.UserAlreadyExistException;
-import com.example.application.exception.UserNotFoundException;
+import com.example.application.exception.user.UserAlreadyExistException;
+import com.example.application.exception.user.UserNotFoundException;
 import com.example.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
+    public static final String ERROR = "Произошла ошибка";
+
     @Autowired
     private UserService userService;
 
@@ -20,30 +22,30 @@ public class UserController {
         try {
             return ResponseEntity.ok("Сервер работает!");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error");
+            return ResponseEntity.badRequest().body(ERROR);
         }
     }
 
     @PostMapping
-    public ResponseEntity registration(@RequestBody UserEntity user) {
+    public ResponseEntity registerUser(@RequestBody UserEntity user) {
         try {
-            userService.registration(user);
+            userService.registerUser(user);
             return ResponseEntity.ok("Пользователь успешно добавлен!");
         } catch (UserAlreadyExistException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
+            return ResponseEntity.badRequest().body(ERROR);
         }
     }
 
     @GetMapping
-    public ResponseEntity getOneUser(@RequestParam Long id) {
+    public ResponseEntity getUser(@RequestParam Long id) {
         try {
             return ResponseEntity.ok(userService.getOne(id));
         } catch (UserNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
+            return ResponseEntity.badRequest().body(ERROR);
         }
     }
 
@@ -52,7 +54,7 @@ public class UserController {
         try {
             return ResponseEntity.ok(userService.deleteUser(id));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
+            return ResponseEntity.badRequest().body(ERROR);
         }
     }
 
