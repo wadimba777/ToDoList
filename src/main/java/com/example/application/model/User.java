@@ -6,6 +6,9 @@ import lombok.Data;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Модель пользователя, используемая для представления пользователя в системе.
+ */
 @Data
 public class User {
     private Long id;

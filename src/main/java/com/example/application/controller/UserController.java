@@ -8,15 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Контроллер для работы с пользователями.
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
+    /**
+     * Сообщение об ошибке по умолчанию.
+     */
     public static final String ERROR = "Произошла ошибка";
 
     @Autowired
     private UserService userService;
 
+    /**
+     * Получает список пользователей.
+     * @return ответ с сообщением "Сервер работает!"
+     */
     @GetMapping("/")
     public ResponseEntity getUsers() {
         try {
@@ -26,6 +36,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Регистрирует нового пользователя.
+     * @param user новый пользователь
+     * @return ответ с сообщением об успешной регистрации или ошибкой
+     */
     @PostMapping
     public ResponseEntity registerUser(@RequestBody UserEntity user) {
         try {
@@ -38,6 +53,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Получает информацию о пользователе по его идентификатору.
+     * @param id идентификатор пользователя
+     * @return пользователь в виде ответа или сообщение об ошибке
+     */
     @GetMapping
     public ResponseEntity getUser(@RequestParam Long id) {
         try {
@@ -49,6 +69,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Удаляет пользователя по его идентификатору.
+     * @param id идентификатор пользователя для удаления
+     * @return ответ с идентификатором удаленного пользователя или сообщение об ошибке
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
         try {

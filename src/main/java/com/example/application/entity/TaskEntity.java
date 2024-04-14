@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Сущность, представляющая собой задачу в системе.
+ */
 @Data
 @Builder
 @NoArgsConstructor

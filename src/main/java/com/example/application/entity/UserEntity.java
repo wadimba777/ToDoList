@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Сущность, представляющая собой пользователя.
+ */
 @Data
 @Builder
 @NoArgsConstructor
