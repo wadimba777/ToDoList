@@ -14,10 +14,17 @@
 Используемые технологии:
 
 • Spring Boot - версия 3.2.4
+
 • Spring Data JPA - версия 2.5.4
+
 • Spring Web - версия 5.3.6
+
 • PostgreSQL - версия 13.3
+
 • Lombok - версия 1.18.22
+
 • Flyway - версия 9.22.3
+
 • Spring Boot DevTools - версия 2.5.4
+
 • Spring Boot Starter Test - версия 2.5.4
