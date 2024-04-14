@@ -24,7 +24,7 @@ public class TaskEntity {
     private String description;
 
     @Column(name = "completed")
-    private boolean completed;
+    private Boolean completed;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
