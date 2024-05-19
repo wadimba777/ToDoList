@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Сервис для работы с пользователями.
@@ -42,7 +43,7 @@ public class UserService {
      * @return пользователь в виде модели
      */
     public Optional<User> getOne(Long id) {
-        return userRepository.findById(id).map(User::toModel);
+        return userRepository.findById(id).map(UserService::toModel);
     }
 
     /**
@@ -53,5 +54,21 @@ public class UserService {
     public Long deleteUser(Long id) {
         userRepository.deleteById(id);
         return id;
+    }
+
+    /**
+     * Конвертирует класс Entity в Model.
+     * @param entity обьект UserEntity
+     * @return обьект модели класса User
+     */
+    public static User toModel(UserEntity entity) {
+        User model = new User();
+        model.setId(entity.getId());
+        model.setUsername(entity.getUsername());
+        model.setTasks(entity.getTasks()
+                .stream()
+                .map(TaskService::toModel)
+                .collect(Collectors.toList()));
+        return model;
     }
 }

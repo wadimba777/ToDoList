@@ -33,7 +33,7 @@ public class TaskService {
     public Task create(TaskEntity task, Long userId) {
         UserEntity user = userRepository.findById(userId).get();
         task.setUser(user);
-        return Task.toModel(taskRepository.save(task));
+        return toModel(taskRepository.save(task));
     }
 
     /**
@@ -48,6 +48,19 @@ public class TaskService {
             throw new TaskAlreadyCompletedException("Задача уже помечена как выполненная");
         }
         task.setCompleted(true);
-        return Task.toModel(taskRepository.save(task));
+        return toModel(taskRepository.save(task));
+    }
+
+    /**
+     * Конвертирует класс Entity в Model.
+     * @param entity обьект TaskEntity
+     * @return обьект модели класса Task
+     */
+    public static Task toModel(TaskEntity entity) {
+        Task model = new Task();
+        model.setId(entity.getId());
+        model.setTitle(entity.getTitle());
+        model.setCompleted(entity.getCompleted());
+        return model;
     }
 }

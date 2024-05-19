@@ -12,12 +12,4 @@ public class Task {
     private String title;
     private Boolean completed;
     private String description;
-
-    public static Task toModel(TaskEntity entity) {
-        Task model = new Task();
-        model.setId(entity.getId());
-        model.setTitle(entity.getTitle());
-        model.setCompleted(entity.getCompleted());
-        return model;
-    }
 }

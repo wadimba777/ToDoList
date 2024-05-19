@@ -1,6 +1,7 @@
 package com.example.application.model;
 
 import com.example.application.entity.UserEntity;
+import com.example.application.service.TaskService;
 import lombok.Data;
 
 import java.util.List;
@@ -14,15 +15,4 @@ public class User {
     private Long id;
     private String username;
     private List<Task> tasks;
-
-    public static User toModel(UserEntity entity) {
-        User model = new User();
-        model.setId(entity.getId());
-        model.setUsername(entity.getUsername());
-        model.setTasks(entity.getTasks()
-                .stream()
-                .map(Task::toModel)
-                .collect(Collectors.toList()));
-        return model;
-    }
 }
