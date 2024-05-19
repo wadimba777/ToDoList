@@ -3,8 +3,8 @@ package com.example.application.service;
 import com.example.application.entity.TaskEntity;
 import com.example.application.entity.UserEntity;
 import com.example.application.model.Task;
-import com.example.application.repository.TaskRepo;
-import com.example.application.repository.UserRepo;
+import com.example.application.repository.TaskRepository;
+import com.example.application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class TaskService {
 
     @Autowired
-    private TaskRepo taskRepo;
+    private TaskRepository taskRepository;
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepository;
 
     /**
      * Создает новую задачу для указанного пользователя.
@@ -27,9 +27,9 @@ public class TaskService {
      * @return созданная задача в виде модели
      */
     public Task create(TaskEntity task, long userId) {
-        UserEntity user = userRepo.findById(userId).get();
+        UserEntity user = userRepository.findById(userId).get();
         task.setUser(user);
-        return Task.toModel(taskRepo.save(task));
+        return Task.toModel(taskRepository.save(task));
     }
 
     /**
@@ -38,8 +38,8 @@ public class TaskService {
      * @return обновленная задача в виде модели
      */
     public Task complete(long id) {
-        TaskEntity task = taskRepo.findById(id).get();
+        TaskEntity task = taskRepository.findById(id).get();
         task.setCompleted(!task.getCompleted());
-        return Task.toModel(taskRepo.save(task));
+        return Task.toModel(taskRepository.save(task));
     }
 }

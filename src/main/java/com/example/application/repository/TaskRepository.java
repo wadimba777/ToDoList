@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Интерфейс репозитория для доступа к задачам в базе данных.
  */
-public interface TaskRepo extends CrudRepository<TaskEntity, Long> {
+public interface TaskRepository extends CrudRepository<TaskEntity, Long> {
 }

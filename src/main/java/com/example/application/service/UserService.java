@@ -4,7 +4,7 @@ import com.example.application.entity.UserEntity;
 import com.example.application.exception.user.UserAlreadyExistException;
 import com.example.application.exception.user.UserNotFoundException;
 import com.example.application.model.User;
-import com.example.application.repository.UserRepo;
+import com.example.application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepository;
 
     /**
      * Регистрирует нового пользователя.
@@ -24,10 +24,10 @@ public class UserService {
      * @throws UserAlreadyExistException если пользователь с таким именем уже существует
      */
     public UserEntity registerUser(UserEntity user) throws UserAlreadyExistException {
-        if (userRepo.findByUsername(user.getUsername()) != null) {
+        if (userRepository.findByUsername(user.getUsername()) != null) {
             throw new UserAlreadyExistException("Пользователь с таким именем уже существует");
         }
-        return userRepo.save(user);
+        return userRepository.save(user);
     }
 
     /**
@@ -37,7 +37,7 @@ public class UserService {
      * @throws UserNotFoundException если пользователь не найден
      */
     public User getOne(long id) throws UserNotFoundException {
-        UserEntity entity = userRepo.findById(id).orElse(null);
+        UserEntity entity = userRepository.findById(id).orElse(null);
         if (entity == null) {
             throw new UserNotFoundException("Пользователь не найден");
         }
@@ -50,7 +50,7 @@ public class UserService {
      * @return идентификатор удаленного пользователя
      */
     public Long deleteUser(Long id) {
-        userRepo.deleteById(id);
+        userRepository.deleteById(id);
         return id;
     }
 }

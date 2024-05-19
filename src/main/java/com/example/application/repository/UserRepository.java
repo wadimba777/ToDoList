@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Интерфейс репозитория для доступа к пользователям в базе данных.
  */
-public interface UserRepo extends CrudRepository<UserEntity, Long> {
+public interface UserRepository extends CrudRepository<UserEntity, Long> {
     UserEntity findByUsername(String username);
 }
