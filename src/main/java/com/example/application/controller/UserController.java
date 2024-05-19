@@ -1,12 +1,17 @@
 package com.example.application.controller;
 
+import com.example.application.entity.TaskEntity;
 import com.example.application.entity.UserEntity;
 import com.example.application.exception.user.UserAlreadyExistException;
 import com.example.application.exception.user.UserNotFoundException;
+import com.example.application.model.Task;
+import com.example.application.repository.UserRepo;
 import com.example.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Контроллер для работы с пользователями.
@@ -68,6 +73,23 @@ public class UserController {
             return ResponseEntity.badRequest().body(ERROR);
         }
     }
+//
+//    /**
+//     * Получает информацию о всех задачах пользователя по его идентификатору.
+//     * @param id идентификатор пользователя
+//     * @return список задач в виде ответа или сообщение об ошибке
+//     */
+//    @GetMapping("/{id}/tasks")
+//    public ResponseEntity getAllUserTasks(@PathVariable long id) {
+//        try {
+//            List<Task> tasks = userService.getAllTasks(id);
+//            return ResponseEntity.ok(tasks);
+//        } catch (UserNotFoundException e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body(ERROR);
+//        }
+//    }
 
     /**
      * Удаляет пользователя по его идентификатору.
