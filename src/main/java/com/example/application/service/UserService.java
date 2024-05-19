@@ -5,17 +5,23 @@ import com.example.application.exception.user.UserAlreadyExistException;
 import com.example.application.exception.user.UserNotFoundException;
 import com.example.application.model.User;
 import com.example.application.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * Сервис для работы с пользователями.
  */
 @Service
 public class UserService {
+    private final UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /**
      * Регистрирует нового пользователя.
@@ -34,14 +40,9 @@ public class UserService {
      * Возвращает пользователя с указанным идентификатором.
      * @param id идентификатор пользователя
      * @return пользователь в виде модели
-     * @throws UserNotFoundException если пользователь не найден
      */
-    public User getOne(long id) throws UserNotFoundException {
-        UserEntity entity = userRepository.findById(id).orElse(null);
-        if (entity == null) {
-            throw new UserNotFoundException("Пользователь не найден");
-        }
-        return User.toModel(entity);
+    public Optional<User> getOne(Long id) {
+        return userRepository.findById(id).map(User::toModel);
     }
 
     /**

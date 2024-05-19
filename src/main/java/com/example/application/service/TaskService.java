@@ -2,6 +2,8 @@ package com.example.application.service;
 
 import com.example.application.entity.TaskEntity;
 import com.example.application.entity.UserEntity;
+import com.example.application.exception.task.TaskAlreadyCompletedException;
+import com.example.application.exception.task.TaskNotFoundException;
 import com.example.application.model.Task;
 import com.example.application.repository.TaskRepository;
 import com.example.application.repository.UserRepository;
@@ -13,12 +15,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TaskService {
+    private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    private TaskRepository taskRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    public TaskService(TaskRepository taskRepository, UserRepository userRepository) {
+        this.taskRepository = taskRepository;
+        this.userRepository = userRepository;
+    }
 
     /**
      * Создает новую задачу для указанного пользователя.
@@ -26,20 +30,24 @@ public class TaskService {
      * @param userId идентификатор пользователя
      * @return созданная задача в виде модели
      */
-    public Task create(TaskEntity task, long userId) {
+    public Task create(TaskEntity task, Long userId) {
         UserEntity user = userRepository.findById(userId).get();
         task.setUser(user);
         return Task.toModel(taskRepository.save(task));
     }
 
     /**
-     * Помечает задачу с указанным идентификатором как завершенную или незавершенную.
+     * Помечает задачу с указанным идентификатором как завершенную.
      * @param id идентификатор задачи
      * @return обновленная задача в виде модели
      */
-    public Task complete(long id) {
-        TaskEntity task = taskRepository.findById(id).get();
-        task.setCompleted(!task.getCompleted());
+    public Task complete(Long id) throws TaskNotFoundException, TaskAlreadyCompletedException {
+        TaskEntity task = taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException("Задача с таким ID не найдена"));
+        if (task.getCompleted()) {
+            throw new TaskAlreadyCompletedException("Задача уже помечена как выполненная");
+        }
+        task.setCompleted(true);
         return Task.toModel(taskRepository.save(task));
     }
 }
