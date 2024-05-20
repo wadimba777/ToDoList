@@ -5,7 +5,6 @@ import com.example.application.exception.user.UserAlreadyExistException;
 import com.example.application.exception.user.UserNotFoundException;
 import com.example.application.model.User;
 import com.example.application.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,21 +38,32 @@ public class UserService {
 
     /**
      * Возвращает пользователя с указанным идентификатором.
+     *
      * @param id идентификатор пользователя
      * @return пользователь в виде модели
      */
-    public Optional<User> getOne(Long id) {
-        return userRepository.findById(id).map(UserService::toModel);
+    public Optional<User> getUser(Long id) throws UserNotFoundException {
+        return Optional.ofNullable(userRepository.findById(id)
+                .map(UserService::toModel)
+                .orElseThrow(() -> new UserNotFoundException("Пользователь с ID " + id + " не найден"))
+        );
+    }
+
+    /**
+     * Возвращает список всех пользователей.
+     * @return пользователь в виде модели
+     */
+    public Iterable<UserEntity> getAllUsers() {
+        return userRepository.findAll();
     }
 
     /**
      * Удаляет пользователя с указанным идентификатором.
+     *
      * @param id идентификатор пользователя
-     * @return идентификатор удаленного пользователя
      */
-    public Long deleteUser(Long id) {
+    public void deleteUser(Long id) {
         userRepository.deleteById(id);
-        return id;
     }
 
     /**
