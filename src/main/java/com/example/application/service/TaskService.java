@@ -4,7 +4,6 @@ import com.example.application.entity.TaskEntity;
 import com.example.application.entity.UserEntity;
 import com.example.application.exception.task.TaskAlreadyCompletedException;
 import com.example.application.exception.task.TaskNotFoundException;
-import com.example.application.exception.user.UserNotFoundException;
 import com.example.application.model.Task;
 import com.example.application.repository.TaskRepository;
 import com.example.application.repository.UserRepository;

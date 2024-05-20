@@ -3,7 +3,6 @@ package com.example.application.controller;
 import com.example.application.entity.TaskEntity;
 import com.example.application.exception.task.TaskAlreadyCompletedException;
 import com.example.application.exception.task.TaskNotFoundException;
-import com.example.application.exception.user.UserNotFoundException;
 import com.example.application.model.Task;
 import com.example.application.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
