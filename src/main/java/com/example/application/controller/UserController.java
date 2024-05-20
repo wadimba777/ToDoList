@@ -23,23 +23,41 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    /**
+     * Получает список пользователей.
+     * @return список пользователей
+     */
     @GetMapping("/")
     public Iterable<UserEntity> getUsers() {
         return userService.getAllUsers();
     }
 
+    /**
+     * Регистрирует нового пользователя.
+     * @param user новый пользователь
+     * @return ответ с сообщением об успешной регистрации или ошибкой
+     */
     @PostMapping
     public ResponseEntity<String> registerUser(@RequestBody UserEntity user) throws UserAlreadyExistException {
         userService.registerUser(user);
         return ResponseEntity.ok("Пользователь успешно добавлен!");
     }
 
+    /**
+     * Получает информацию о пользователе по его идентификатору.
+     * @param id идентификатор пользователя
+     * @return пользователь в виде ответа или сообщение об ошибке
+     */
     @GetMapping
     public ResponseEntity<Optional<User>> getUser(@RequestParam Long id) throws UserNotFoundException {
         return ResponseEntity.ok(userService.getUser(id));
     }
 
+    /**
+     * Удаляет пользователя по его идентификатору.
+     * @param id идентификатор пользователя для удаления
+     * @return ответ с идентификатором удаленного пользователя или сообщение об ошибке
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

@@ -23,18 +23,34 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    /**
+     * Создает новую задачу для указанного пользователя.
+     * @param task новая задача
+     * @param userId идентификатор пользователя
+     * @return созданная задача в виде ответа или сообщение об ошибке
+     */
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody TaskEntity task,
                                            @RequestParam Long userId) {
         return ResponseEntity.ok(taskService.createTask(task, userId));
     }
 
+    /**
+     * Удаляет задачу с указанным id.
+     * @param taskId идентификатор задачи
+     * @return ответ с сообщением об удалении или сообщением об ошибке
+     */
     @DeleteMapping("/{taskId}")
     public ResponseEntity<String> deleteTask(@PathVariable Long taskId) throws TaskNotFoundException {
         taskService.deleteTask(taskId);
         return ResponseEntity.ok("Задача удалена");
     }
 
+    /**
+     * Помечает задачу с указанным идентификатором как завершенную.
+     * @param id идентификатор задачи
+     * @return ответ с завершенной задачей или сообщение об ошибке
+     */
     @PutMapping
     public ResponseEntity<Task> completeTask(@RequestParam Long id) throws TaskNotFoundException, TaskAlreadyCompletedException {
         return ResponseEntity.ok(taskService.complete(id));
